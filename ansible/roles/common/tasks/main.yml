@@ -1,4 +1,8 @@
 ---
 - group: gid=10000 name=powerdns
-- user: name=ahu comment="Bert Hubert" uid=10000 group=powerdns groups="adm,sudo" password="$6$94T2Hot2JEp8Czid$3pmfP6q4tvodwXN6yuwpEi0j5QwbaqSm1rlfSDlh6jE0w282UM3XCaZg8Ez8PLMIsX2LprnKqONGIJLScDYiT0"
-- user: name=peter comment="Peter van Dijk" uid=10001 group=powerdns groups="adm,sudo" password="$6$3mmH4smYFhCuXx5$KxYSZK8CLhe.RsMbdDaTnZnpzHIENTKdFW9bSBSoT0sPKff4A6ViNoJYlZcFVHDTEjYR5zjfKcp7AVP3YRA6A/"
+- user: name="{{ item.name }}" comment="{{ item.comment }}" uid={{ item.uid }}  group="{{ item.group | default("powerdns") }}" groups="{{ item.groups | default("adm,sudo") }}" password="{{ item.password }}" state="{{ item.state | default("absent")}}" shell="{{ item.shell | default("/bin/bash") }}"
+  with_items: users
+- authorized_key: user="{{ item.0.name }}" key="{{ lookup('file', item.1) }}"
+  with_subelements:
+    - users
+    - authorized_key

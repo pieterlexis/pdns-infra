@@ -1,0 +1,24 @@
+---
+users:
+  - name: "ahu"
+    comment: "Bert Hubert"
+    state: present
+    uid: 10000
+    password: "$6$94T2Hot2JEp8Czid$3pmfP6q4tvodwXN6yuwpEi0j5QwbaqSm1rlfSDlh6jE0w282UM3XCaZg8Ez8PLMIsX2LprnKqONGIJLScDYiT0"
+    authorized_key:
+      - '/dev/null'
+  - name: "peter"
+    comment: "Peter van Dijk"
+    state: present
+    uid: 10001
+    password: "$6$3daHyC2Td$zcsvZppnpIG/qfwxUJ9rxTkVgUwDGC0Z3awwFZ6cLH9fXuke13ozQetYE5wcwY3v9AoaqZVMh4Dzui3PA1dQI0"
+    authorized_key:
+      - "public_keys/peter_at_onion.home.dataloss.nl"
+  - name: "pieter"
+    comment: "Pieter Lexis"
+    state: present
+    uid: 10002
+    password: "$6$lTNuPzB4x$g23a8/F7Wa9ae8gdcvIq0BUzCNpKpFrVq/3bmfLFIfaiWjkE3/JTaCQXq2Wxr1LD/thkvN2EuB2ob4TtBDjA1/"
+    authorized_key:
+      - "public_keys/pieter_at_aardbei.mobile.plexis.eu"
+      - "public_keys/pieter_at_bosbes.home.plexis.eu"
