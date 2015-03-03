@@ -1,0 +1,5 @@
+---
+- apt: name=python-virtualenv state=latest
+- apt: name=python-dev state=latest
+- user: name=buildbot group=powerdns home=/srv/buildbot comment="BuildBot" system=yes
+- pip: name=buildbot virtualenv=/srv/buildbot_venv

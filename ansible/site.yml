@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  roles:
+    - common
+  sudo: yes
+
+- hosts: test-master
+  roles:
+    - buildbot
+  sudo: yes
+
+
