@@ -1,5 +1,35 @@
 ---
-- apt: name=python-virtualenv state=latest
-- apt: name=python-dev state=latest
+- apt: name="{{ item }}" state=latest
+  with_items:
+    - python-virtualenv
+    - python-dev
+
 - user: name=buildbot group=powerdns home=/srv/buildbot comment="BuildBot" system=yes
-- pip: name=buildbot virtualenv=/srv/buildbot_venv
+- pip: name=buildbot virtualenv=/opt/buildbot
+
+- debug: msg="{{ ansible_lsb }}"
+
+- copy: dest=/etc/init.d/buildmaster src=buildbot.init.sh mode=0744 owner=root group=adm
+  when: ansible_os_family == "Debian" and ansible_lsb.major_release == '7'
+  notify:
+    - restart buildmaster
+- template: dest=/etc/default/buildmaster src=buildbot.default.j2 mode=0644 owner=root group=adm
+  when: ansible_os_family == "Debian" and ansible_lsb.major_release == '7'
+  notify:
+    - restart buildmaster
+
+- copy: dest=/etc/systemd/user/buildmaster.service src=buildmaster.service mode=0644 owner=root group=adm
+  when: ansible_os_family == "Debian" and ansible_lsb.major_release == '8'
+  notify:
+    - restart buildmaster
+
+- command: /bin/sh -c '/opt/buildbot/bin create-master /srv/buildbot' - buildbot
+  args:
+    creates: "/srv/buildbot/state.sqlite"
+
+- template: dest=/srv/buildbot/master.cfg src=master.cfg.j2 mode=644 owner=buildbot group=powerdns
+  notify:
+    - restart buildmaster
+
+- service: name=buildmaster state=started enabled=yes
+  when: ansible_os_family == "Debian"
