@@ -15,7 +15,7 @@
   * Ansible
   * BuildBot
   * Docker
-  * Jails
+  * Jails (Jetpack)
 
 # Goals
   * fast builds (under 10 minutes end to end preferably)
